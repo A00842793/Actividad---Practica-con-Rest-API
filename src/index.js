@@ -19,6 +19,9 @@ app.use('/', indexRoutes);
 app.use('/users', usersRoutes);
 app.use('/login', authRoutes);
 
+const path = require('path');
+app.use(express.static(path.join(__dirname, '..', 'public')));
+
 app.use((req, res) => {
   res.status(404).json({ message: 'Ruta no encontrada' });
 });

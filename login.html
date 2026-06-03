@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    body { font-family: sans-serif; display: flex; flex-direction: column;
+           align-items: center; justify-content: center; height: 100vh; gap: 10px; margin: 0; }
+    input { padding: 8px; width: 220px; }
+    button { padding: 8px 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>Iniciar sesión</h2>
+  <input id="user" placeholder="usuario">
+  <input id="pass" type="password" placeholder="contraseña">
+  <button id="btn">Entrar</button>
+
+  <script>
+    const API = ""; // mismo origen que la API; no hace falta poner localhost:3000
+
+    async function login() {
+      const res = await fetch(`${API}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: document.getElementById("user").value,
+          password: document.getElementById("pass").value
+        })
+      });
+      if (!res.ok) { alert("Credenciales incorrectas"); return; }
+      const data = await res.json();
+      window.location.href = `game/index.html?id=${data.user.id}`;
+    }
+
+    document.getElementById("btn").addEventListener("click", login);
+  </script>
+</body>
+</html>
